@@ -4,9 +4,9 @@
 
 from typing import Union, Tuple
 
-def to_kv(k: str, v: Union[int, float]) -> Tuple:
+def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
     """
     Parameters: string and a float or int
     Returns: tuple
     """
-    return (k, float(v) ** 2.0)
+    return (k, (v) ** 2)
