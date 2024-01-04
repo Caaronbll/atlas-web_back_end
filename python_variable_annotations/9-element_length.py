@@ -2,11 +2,11 @@
 
 """annotating the given function"""
 
-from typing import Tuple
+from typing import List, Tuple, Iterable, Sequence
 
-def element_length(lst: int) -> Tuple:
+def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
     """
-    Parameters: 1st
-    Returns: tuple?
+    Parameters: list
+    Returns: list of tuples
     """
     return [(i, len(i)) for i in lst]
