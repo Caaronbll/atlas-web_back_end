@@ -6,10 +6,8 @@ import asyncio, random
 
 async def async_generator():
     """
-    _summary_
-    loops 10 times
-    waits a second in async
-    returns random # from 1-10
+    Parameters: none
+    Returns: 10 random numbers
     """
     for _ in range(10):
         await asyncio.sleep(1)
