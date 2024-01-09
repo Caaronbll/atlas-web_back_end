@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""implimenting BasicCaching to support put and get
+"""
 
 from base_caching import BaseCaching
 
