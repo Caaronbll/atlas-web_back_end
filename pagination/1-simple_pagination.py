@@ -4,6 +4,7 @@
 import csv
 from typing import List, Tuple
 
+
 def index_range(page: int, page_size: int) -> Tuple:
     """Returns a range of indexes"""
     start_index = (page - 1) * page_size
@@ -33,13 +34,13 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-            """Returns a list of lists"""
-            assert isinstance(page, int) and page > 0
-            assert isinstance(page_size, int) and page_size > 0
-            self.__dataset = []
-            with open(self.DATA_FILE, 'r') as f:
-                reader = csv.reader(f)
-                for row in reader:
-                    self.__dataset.append(row)
-            indexes = index_range(page, page_size)
-            return self.__dataset[indexes[0]:indexes[1]]
+        """Returns a list of lists"""
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
+        self.__dataset = []
+        with open(self.DATA_FILE, 'r') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                self.__dataset.append(row)
+        indexes = index_range(page, page_size)
+        return self.__dataset[indexes[0]:indexes[1]]
