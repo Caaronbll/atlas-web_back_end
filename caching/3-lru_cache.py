@@ -19,10 +19,10 @@ class LRUCache(BaseCaching):
         """
         if key is not None and item is not None:
             if key in self.cache_data:
-                # Move the existing key to the end to mark it as most recently used
+                # Move existing key to end to mark it as most recently used
                 del self.cache_data[key]
             elif len(self.cache_data) >= self.MAX_ITEMS:
-                # Remove the least recently used item (first item in OrderedDict)
+                # Remove least recently used item (first item in OrderedDict)
                 lru_key, _ = self.order.popitem(last=False)
                 del self.cache_data[lru_key]
                 print("DISCARD: {}".format(lru_key))
