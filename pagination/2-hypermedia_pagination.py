@@ -46,7 +46,9 @@ class Server:
         indexes = index_range(page, page_size)
         return self.__dataset[indexes[0]:indexes[1]]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Optional[int]]:
+    def get_hyper(
+            self, page: int = 1, page_size: int = 10
+            ) -> Dict[str, Optional[int]]:
         """Returns a dictionary with pagination information"""
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
