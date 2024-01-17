@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tasks 0-6 - Regex-ing
+Tasks 0-5 - Regex-ing
 """
 from typing import List
 import re
@@ -104,15 +104,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return connection
-
-
-def is_valid(hashed_password: bytes, password: str) -> bool:
-    """Validate that the provided password matches the hashed password."""
-    # Convert the password string to bytes
-    password_bytes = password.encode('utf-8')
-
-    # Use bcrypt to check if the provided password matches the hashed password
-    return bcrypt.checkpw(password_bytes, hashed_password)
 
 
 if __name__ == "__main__":
