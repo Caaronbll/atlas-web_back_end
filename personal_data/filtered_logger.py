@@ -5,7 +5,7 @@ Task 0 - Regex-ing
 from typing import List
 import re
 import logging
-
+PII_FIELDS = ("username", "email", "phone_number", "ssn", "credit_card")
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class"""
@@ -39,3 +39,16 @@ def filter_datum(fields: List[str], redaction: str,
         message = re.sub(f"{field}=.*?{separator}",
                          f"{field}={redaction}{separator}", message)
     return message
+
+def get_logger() -> logging.Logger:
+    """returns a logger object"""
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    stream_handler = logging.StreamHandler()
+    formatter = RedactingFormatter(
+        fmt="%(asctime)s - %(levelname)s - %(message)s",
+        pii_fields=PII_FIELDS)
+    stream_handler.setFormatter(formatter)
+    logger.addHandler(stream_handler)
+    return logger
