@@ -10,6 +10,35 @@ import mysql.connector
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
+def main():
+    """Obtain a database connection,
+    retrieve rows from the users table,
+    and display each row in a filtered format."""
+    db_connector = get_db()
+
+    try:
+        cursor = db_connector.cursor()
+        cursor.execute("SELECT * FROM users")
+        rows = cursor.fetchall()
+        logger = get_logger()
+
+        for row in rows:
+            formated_row = " ".join(
+                f"{field}={logger.REDACTION}"
+                if field in PII_FIELDS else
+                f"{field}={value}" for field,
+                value in zip(cursor.column_names, row))
+
+            logger.info(formated_row)
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+    finally:
+        # Close the database connection
+        db_connector.close()
+
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class"""
 
@@ -74,3 +103,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return connection
+
+if __name__ == "__main__":
+    # Call the main function if the script is executed directly
+    main()
