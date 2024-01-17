@@ -5,7 +5,8 @@ Task 0 - Regex-ing
 from typing import List
 import re
 import logging
-PII_FIELDS = ("username", "email", "phone_number", "ssn", "credit_card")
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class"""
