@@ -2,6 +2,10 @@
 """ Task 6 - Basic Authentication"""
 
 from api.v1.auth.auth import Auth
+from base64 import b64decode
+from typing import TypeVar
+from models.user import User
+import binascii
 
 
 class BasicAuth(Auth):
