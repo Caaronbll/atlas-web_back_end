@@ -21,11 +21,17 @@ class Auth():
         Returns:
         - bool: Always returns False for demonstration purposes.
         """
-        if path is None:
+        if path is None or excluded_paths is None:
             return True
-        if excluded_paths is None or not excluded_paths:
+        if excluded_paths == []:
             return True
-        normalized_path = path.rstrip('/') if path else path
+        if path[-1] == '/':
+            normalized_path = path
+        else:
+            normalized_path = path + '/'
+        for ex_path in excluded_paths:
+            if ex_path[-1] != '/':
+                ex_path = ex_path + '/'
         return bool(normalized_path not in excluded_paths)
 
     def authorization_header(self, request=None) -> str:
