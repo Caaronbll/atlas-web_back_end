@@ -13,6 +13,8 @@ class BasicAuth(Auth):
             return None
         if authorization_header is not type(str):
             return None
-        if authorization_header[:6] != 'Basic ':
+        if not authorization_header.startswith("Basic "):
             return None
-        return authorization_header[6:]
+
+        base64_part = authorization_header.split("Basic ")[1].strip()
+        return base64_part
