@@ -23,7 +23,6 @@ class Auth():
         """
         return False
 
-
     def authorization_header(self, request=None) -> str:
         """
         Placeholder method for extracting authorization header.
