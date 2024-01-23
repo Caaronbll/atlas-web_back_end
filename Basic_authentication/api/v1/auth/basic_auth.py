@@ -46,4 +46,3 @@ class BasicAuth(Auth):
         except binascii.Error:
             return None
         return base64_authorization_header
-
