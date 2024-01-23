@@ -34,10 +34,16 @@ class BasicAuth(Auth):
         """
         if base64_authorization_header is None:
             return None
-        if base64_authorization_header is not type(str):
+        if type(base64_authorization_header) is not str:
             return None
         try:
-            decoded_value = base64.b64decode(base64_authorization_header)
-            return decoded_value.decode('utf-8')
-        except base64.binascii.Error:
+            base64_authorization_header = base64_authorization_header.encode(
+                'utf-8')
+            base64_authorization_header = b64decode(
+                base64_authorization_header)
+            base64_authorization_header = base64_authorization_header.decode(
+                'utf-8')
+        except binascii.Error:
             return None
+        return base64_authorization_header
+
