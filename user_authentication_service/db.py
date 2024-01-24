@@ -25,6 +25,7 @@ class DB:
     def _session(self) -> Session:
         """Memoized session object
         """
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
