@@ -5,7 +5,7 @@ Task 3 - Auth class
 
 from flask import request
 from typing import List, TypeVar
-
+import os
 
 class Auth():
     """ Auth class"""
@@ -66,5 +66,6 @@ class Auth():
         """ Retruns cookie value from request """
         if request is None:
             return None
-        session_name = request.app.config.get('SESSION_NAME', '_my_session_id')
+
+        session_name = os.getenv('SESSION_NAME')
         return request.cookies.get(session_name)
