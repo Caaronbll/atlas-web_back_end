@@ -5,6 +5,7 @@ Task 4 - Auth class
 from db import DB
 import bcrypt
 from user import User
+from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> bytes:
@@ -24,9 +25,10 @@ class Auth(DB):
 
     def register_user(self, email: str, password: str) -> User:
         """ Registers a user to the database """
-        if self._db.find_user_by(email=email):
-            raise ValueError(f"User <user's email> already exists")
-        else:
-            hashed_pwd = _hash_password(password)
-            user = self._db.add_user(email, hashed_pwd)
-        return user
+        try:
+            if self._db.find_user_by(email=email):
+                raise ValueError(f'User {email} already exists')
+        except NoResultFound:
+            hashed_password = _hash_password(password)
+            user = self._db.add_user(email, hashed_password)
+            return user
