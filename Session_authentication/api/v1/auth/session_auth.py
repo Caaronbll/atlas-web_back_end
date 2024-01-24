@@ -2,7 +2,10 @@
 """ Task 1 - Empty session
 """
 
+from flask import Flask, request, jsonify
 from api.v1.auth.auth import Auth
+from models.user import User
+from api.v1.app import app, auth
 import uuid
 
 
@@ -36,3 +39,6 @@ class SessionAuth(Auth):
 
         user_instance = User.get(user_id)
         return user_instance
+
+    @app.route('/auth_session/login', methods=['POST'])
+    def login():
