@@ -6,6 +6,7 @@ from db import DB
 import bcrypt
 from user import User
 
+
 def _hash_password(password: str) -> bytes:
     """ Hashes a password """
     salt = bcrypt.gensalt()
