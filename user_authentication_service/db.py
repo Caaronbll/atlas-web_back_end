@@ -33,14 +33,13 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """ Adds a new user to the database """
-        new_user = User(email = email, hashed_password = hashed_password)
-        self.total_users += 1
-        new_user.id = self.total_users
-        new_user.session_id = str(self.total_users)
-        new_user.reset_token = 'reset'
+        new_user = User(email=email, hashed_password=hashed_password)
 
-        session = self._session
-        session.add(new_user)
-        session.commit()
-
-        return new_user
+        try:
+            self._session.add(new_user)
+            self._session.commit()
+            return new_user
+        except IntegrityError:
+            # Handle IntegrityError, for example, if the email is not unique
+            self._session.rollback()
+            return None
