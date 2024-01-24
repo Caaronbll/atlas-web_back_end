@@ -3,13 +3,14 @@
 """
 from flask import Flask, request, jsonify, make_response
 from api.v1.views import app_views
+import os
+from models.user import User
 
 
-app = Flask(__name__)
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def auth_session_login():
+def login():
     """ Handles authentication for Session """
     email = request.form.get('email')
     password = request.form.get('password')
