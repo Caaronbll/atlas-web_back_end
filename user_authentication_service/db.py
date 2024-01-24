@@ -45,15 +45,10 @@ class DB:
             self._session.rollback()
             return None
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """ Returns the first row found in the users table """
         try:
-            user = self._session.query(User).filter_by(**kwargs).first()
-
-            if user is None:
-                raise NoResultFound("No user found for the given filter arguments")
-
+            user = self._session.query(User).filter_by(**kwargs).one()
             return user
-        except InvalidRequestError as e:
-            self.__session.rollback()
-            raise InvalidRequestError(f"Invalid query arguments: {e}")
+        except (InvalidRequestError, NoResultFound) as e:
+            raise e
