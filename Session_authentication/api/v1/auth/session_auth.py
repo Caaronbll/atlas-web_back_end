@@ -4,8 +4,6 @@
 from api.v1.auth.auth import Auth
 import uuid
 from models.user import User
-from flask import Flask, request, jsonify, make_response
-from api.v1.views import app_views
 
 
 class SessionAuth(Auth):
