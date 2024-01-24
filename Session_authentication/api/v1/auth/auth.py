@@ -61,3 +61,10 @@ class Auth():
         - TypeVar('User'): Always returns None for demonstration purposes.
         """
         return None
+
+    def session_cookie(self, request=None):
+        """ Retruns cookie value from request """
+        if request is None:
+            return None
+        session_name = request.app.config.get('SESSION_NAME', '_my_session_id')
+        return request.cookies.get(session_name)
