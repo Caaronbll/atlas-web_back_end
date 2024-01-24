@@ -39,6 +39,3 @@ class SessionAuth(Auth):
 
         user_instance = User.get(user_id)
         return user_instance
-
-    @app.route('/auth_session/login', methods=['POST'])
-    def login():
