@@ -53,3 +53,14 @@ class Auth(DB):
         user = self._db.find_user_by(email=email)
         user.session_id = _generate_uuid()
         return user.session_id
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """ Returns user from session ID """
+        if session_id is None:
+            return None
+
+        user = self._db.find_user_by(session_id)
+        if user is None:
+            return None
+
+        return user
