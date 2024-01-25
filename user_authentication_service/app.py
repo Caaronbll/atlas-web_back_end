@@ -2,15 +2,29 @@
 """
 Task 6 - Basic Flask App
 """
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from auth import Auth
 
 
 app = Flask(__name__)
+AUTH = Auth()
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'], strict_slaches=False)
 def welcome():
     return jsonify({"message": "Bienvenue"})
+
+
+@app.route('/users', methods=['POST'], strict_slaches=False)
+def register_users(email: str, password: str):
+    """Endpoint to register a user"""
+    email = request.form.get('email')
+    password = request.form.get('password')
+    try:
+        Auth.register_user(email, password)
+        return jsonify({"email": email, "message": "user created"})
+    except ValueError:
+        return jsonify({"message": "email already registered"})
 
 
 if __name__ == "__main__":
