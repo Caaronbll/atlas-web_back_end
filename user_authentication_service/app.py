@@ -2,7 +2,7 @@
 """
 Task 6 - Basic Flask App
 """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -11,7 +11,8 @@ AUTH = Auth()
 
 
 @app.route('/', methods=['GET'], strict_slaches=False)
-def welcome():
+def welcome() -> str:
+    """ returns message from api"""
     return jsonify({"message": "Bienvenue"})
 
 
