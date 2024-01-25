@@ -46,8 +46,9 @@ def login():
         response.set_cookie("session_id", session_id)
         return response
 
-    except Auth.UserNotFoundError:
+    except:
         abort(401)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
