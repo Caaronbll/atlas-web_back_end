@@ -52,5 +52,4 @@ class Auth(DB):
         """ Retruns session ID based on email """
         user = self._db.find_user_by(email=email)
         user.session_id = _generate_uuid()
-        self._db.update_user(user.session_id)
         return user.session_id
