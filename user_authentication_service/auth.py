@@ -4,7 +4,7 @@ Task 4 - Auth class
 """
 from db import DB
 import bcrypt
-from user import User
+from user import User, Base
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -35,3 +35,9 @@ class Auth(DB):
 
     def valid_login(self, email: str, password: str) -> bool:
         """ validating credentials for login """
+        try:
+            user = self._db.find_user_by(email)
+            if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+                return True
+        except NoResultFound:
+            return False
