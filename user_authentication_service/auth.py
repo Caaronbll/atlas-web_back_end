@@ -91,5 +91,5 @@ class Auth(DB):
             raise ValueError
         else:
             hashed_password = _hash_password(password)
-            self._db.update_user(hashed_password=hashed_password)
-            self._db.update_user(reset_token=None)
+            self._db.update_user(user.id, hashed_password=hashed_password)
+            self._db.update_user(user.id, reset_token=None)
