@@ -78,7 +78,7 @@ class Auth(DB):
         """ Returns the reset password token """
         user = self._db.find_user_by(email=email)
         if user is None:
-            raise ValueError
+            raise NoResultFound
         elif user:
             new_token = _generate_uuid()
             self._db.update_user(user.id, reset_token=new_token)
