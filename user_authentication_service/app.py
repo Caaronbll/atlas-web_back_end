@@ -77,9 +77,9 @@ def get_reset_password_token():
     """ Generates token from email """
     try:
         email = request.form.get("email")
-        reset_token = AUTH.get_reset_password_token("reset_token")
+        reset_token = AUTH.get_reset_password_token(email)
         return jsonify({"email": email, "reset_token": reset_token}), 200
-    except:
+    except Auth.UserNotFoundError:
         abort(403)
 
 
