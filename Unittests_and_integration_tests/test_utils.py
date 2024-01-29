@@ -3,7 +3,7 @@
 """
 
 import unittest
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 from unittest import mock
 from unittest.mock import patch
@@ -14,9 +14,9 @@ class TestAccessNestedMap(unittest.TestCase):
     """ Tests access_nested_map function """
 
     @parameterized.expand([
-    ({"a": 1}, ("a",), 1),
-    ({"a": {"b": 2}}, ("a",), {"b": 2}),
-    ({"a": {"b": 2}}, ("a", "b"), 2),
+        ({"a": 1}, ("a",), 1),
+        ({"a": {"b": 2}}, ("a",), {"b": 2}),
+        ({"a": {"b": 2}}, ("a", "b"), 2),
     ])
     def test_access_nested_map(self, nested_map, path, expected):
         """ Testing result """
@@ -43,6 +43,7 @@ class TestGetJson(unittest.TestCase):
         with mock.patch('requests.get', return_value=mock.Mock(
                 json=lambda: test_payload)):
             self.assertEqual(get_json(testUrl), test_payload)
+
 
 class TestMemoize(unittest.TestCase):
     """ Tests memoize function """
