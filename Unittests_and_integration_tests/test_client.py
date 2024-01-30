@@ -35,18 +35,19 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, test_json):
-        """ Testing public repo results """
-        test_json.return_value = [
-            {"name": "repo1"},
-            {"name": "repo2"},
-        ]
-        with patch.object(GithubOrgClient, '_public_repos_url',
-                          filler=PropertyMock) as mk:
-            mk.return_value = "www.test.com"
-            test = GithubOrgClient("test")
-            result = test.public_repos()
-            self.assertEqual(result, ["repo1", "repo2"])
-            mk.assert_called_once()
+        """ Testing public repo responses """
+        values = [{"name": "Hey"}, {"name": "Dude"}]
+        test_json.return_value = values
+
+        with patch('client.GithubOrgClient._public_repos_url',
+                   new_callable=PropertyMock) as mocked_public:
+
+            mocked_public.return_value = "world"
+            response = GithubOrgClient('test').public_repos()
+
+            self.assertEqual(response, ["Hey", "Dude"])
+
+            mocked_public.assert_called_once()
             test_json.assert_called_once()
 
     @parameterized.expand([
