@@ -27,7 +27,7 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_public_repos_url(self):
         """ Testing public URLs """
         with patch('client.GithubOrgClient.org',
-                filler=PropertyMock) as mock_org:
+            filler=PropertyMock) as mock_org:
             mock_org.return_value = {"repos_url": "http://testurl.com"}
             client = GithubOrgClient("test")
             self.assertEqual(client._public_repos_url, "http://testurl.com")
@@ -41,7 +41,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ]
         with patch.object(GithubOrgClient, '_public_repos_url',
                           filler=PropertyMock) as mk:
-            mk.return_value = "www.yes.com"
+            mk.return_value = "www.test.com"
             test = GithubOrgClient("test")
             result = test.public_repos()
             self.assertEqual(result, ["repo1", "repo2"])
