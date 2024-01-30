@@ -82,6 +82,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """ Tear down class """
         cls.get_patcher.stop()
 
+    @parameterized_class
     def test_public_repos(self):
         """ Testing public_repos """
         client = GithubOrgClient("test")
