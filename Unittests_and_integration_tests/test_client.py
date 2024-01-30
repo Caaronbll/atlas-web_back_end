@@ -8,6 +8,7 @@ from unittest import mock
 from unittest.mock import patch, PropertyMock
 import requests
 from client import GithubOrgClient
+from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -56,3 +57,35 @@ class TestGithubOrgClient(unittest.TestCase):
         """ Testing license results """
         self.assertEqual(GithubOrgClient.has_license(repo, key),
                          expected)
+
+
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """ Tests set-up and tear down
+    of GithubOrgClient class """
+
+    @classmethod
+    def setUpClass(cls):
+        """ Set up the class """
+        cls.get_patcher = patch('requests.get')
+        cls.mock_get = cls.get_patcher.start()
+
+        # Mocking the behavior of requests.get for different URLs
+        cls.mock_get.side_effect = [
+            unittest.mock.Mock(json=lambda: cls.org_payload),
+            unittest.mock.Mock(json=lambda: cls.repos_payload),
+            unittest.mock.Mock(json=lambda: cls.expected_repos),
+            unittest.mock.Mock(json=lambda: cls.apache2_repos),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        """ Tear down class """
+        cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """ Testing public_repos """
+        client = GithubOrgClient("test")
+        repos = client.public_repos()
+
+        # Assertions based on the expected data
+        self.assertEqual(repos, self.expected_repos)
