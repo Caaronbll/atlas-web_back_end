@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Task 2
+Task 3
 """
 from flask import Flask, render_template, request
 from flask_babel import Babel
@@ -21,8 +21,8 @@ babel = Babel(app)
 
 @app.route('/')
 def index():
-    """ Routeds to 2-index """
-    return render_template('2-index.html')
+    """ Routeds to 3-index """
+    return render_template('3-index.html')
 
 
 @babel.localeselector
