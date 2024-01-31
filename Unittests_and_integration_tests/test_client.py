@@ -3,12 +3,13 @@
 """
 import unittest
 from utils import access_nested_map, get_json, memoize
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from unittest import mock
 from unittest.mock import patch, PropertyMock
+from urllib.error import HTTPError
 import requests
 from client import GithubOrgClient
-from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
+from fixtures import *
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -59,34 +60,20 @@ class TestGithubOrgClient(unittest.TestCase):
                          expected)
 
 
+@parameterized_class(
+    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+    TEST_PAYLOAD
+)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """ Tests set-up and tear down
     of GithubOrgClient class """
 
     @classmethod
     def setUpClass(cls):
-        """ Set up the class """
-        cls.get_patcher = patch('requests.get')
-        cls.mock_get = cls.get_patcher.start()
-
-        # Mocking the behavior of requests.get for different URLs
-        cls.mock_get.side_effect = [
-            unittest.mock.Mock(json=lambda: cls.org_payload),
-            unittest.mock.Mock(json=lambda: cls.repos_payload),
-            unittest.mock.Mock(json=lambda: cls.expected_repos),
-            unittest.mock.Mock(json=lambda: cls.apache2_repos),
-        ]
+        """ Part of TestCase API """
+        cls.get_patcher = patch('requests.get', side_effect=HTTPError)
 
     @classmethod
     def tearDownClass(cls):
         """ Tear down class """
         cls.get_patcher.stop()
-
-    @parameterized_class
-    def test_public_repos(self):
-        """ Testing public_repos """
-        client = GithubOrgClient("test")
-        repos = client.public_repos()
-
-        # Assertions based on the expected data
-        self.assertEqual(repos, self.expected_repos)
