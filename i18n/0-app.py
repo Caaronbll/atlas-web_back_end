@@ -8,8 +8,9 @@ app = Flask(__name__)
 babel = Babel(app)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
+    """ Routeds to 0-index """
     return render_template('templates/0-index.html')
 
 
