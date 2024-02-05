@@ -16,6 +16,19 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs)
     return wrapper
 
+def call_history(method: Callable) -> Callable:
+    """ Decorator for storing function call history """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """ Wrapper call method """
+        input = str(args)
+        self._redis.rpush(f"{method.__qualname__}:inputs", input)
+        output = method(self, *args, **kwargs)
+        self._redis.rpush(f"{method.__qualname__}:outputs", output)
+        return output
+
+    return wrapper
+
 
 class Cache():
     """ Cache class """
