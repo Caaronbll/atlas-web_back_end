@@ -30,6 +30,19 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable) -> None:
+    """ Displays history of calls """
+    rplay = redis.Redis()
+    method_name = method.__qualname__
+    count = r.get(method_name).decode('utf8')
+    print(f"{method_name} was called {count} times:")
+    inputs = rplay.lrange(f"{method_name}:inputs", 0, -1)
+    outputs = rplay.lrange(f"{method_name}:outputs", 0, -1)
+
+    for input, output in zip(input, output):
+        print(f"{method_name}(*{input.decode('utf-8')}) -> {output.decode('utf-8')}")
+
+
 class Cache():
     """ Cache class """
 
