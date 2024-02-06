@@ -40,9 +40,8 @@ def replay(method: Callable) -> None:
     inputs = rplay.lrange(f"{method_name}:inputs", 0, -1)
     outputs = rplay.lrange(f"{method_name}:outputs", 0, -1)
 
-    for input, output in zip(inputs, outputs):
-        print(f"{method_name}(*{input.decode('utf-8')})
-              -> {output.decode('utf-8')}")
+    for ip, op in zip(inputs, outputs):
+        print(f"{method_name}(*{ip.decode('utf-8')}) -> {op.decode('utf-8')}")
 
 
 class Cache():
