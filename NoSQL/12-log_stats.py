@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+""" Task 12 """
+import pymongo
