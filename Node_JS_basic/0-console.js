@@ -1,8 +1,5 @@
-// Task 0 - Create a function named display Message that
-// prints in STDOUT the string arg
+// Task 0
 
-function displayMessage(message) {
-  console.log(message);
-}
+const displayMessage = (aString) => console.log(aString);
 
 module.exports = displayMessage;
