@@ -50,3 +50,5 @@ function countStudents(path) {
     console.error(`Error: ${error.message}`);
   }
 }
+
+module.export = countStudents;
